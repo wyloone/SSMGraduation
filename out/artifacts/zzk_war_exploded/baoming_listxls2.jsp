@@ -1,0 +1,67 @@
+<%@ page language="java" import="java.util.*" pageEncoding="gb2312"%>
+<%@ page language="java" import="java.sql.*" %>
+<jsp:useBean id="connDbBean" scope="page" class="com.util.db"/>
+
+<%
+response.setContentType("application/vnd.ms-excel");
+response.addHeader("Content-Disposition", "attachment;filename=zhiyuanzhemingdan.xls");
+  String name=request.getParameter("huodongmingcheng");
+%>
+<html>
+  <head>
+    <title>报名</title>
+  </head>
+
+  <body >
+
+<table width="100%" border="1" align="center" cellpadding="3" cellspacing="1">  
+  <tr>
+    <td width="30" align="center">序号</td>
+    <td align='center'>活动名称</td>
+    <td align='center'>活动开始时间</td>
+    <td align='center'>活动结束时间</td>
+    <td align='center'>活动地址</td>
+    <td align='center'>团队账号</td>
+    <td align='center'>团队名称</td>
+    <td align='center'>联系电话</td>
+    <td align='center'>报名人</td>
+    <td align='center'>活动状态</td>
+    <td align='center'>审核回复</td>
+	
+    <td width="120" align="center" >添加时间</td>
+    
+  </tr>
+   <%
+    int i=0;
+   String sql="select * from baoming where huodongmingcheng=name  order by id desc";
+ResultSet RS_result=connDbBean.executeQuery(sql);
+			while(RS_result.next())
+			{
+				i++;
+			%>
+  <tr>
+    <td  align="center"><%=i %></td>
+    <td><%=RS_result.getString("huodongmingcheng")%></td>
+    <td><%=RS_result.getString("huodongkaishishijian")%></td>
+    <td><%=RS_result.getString("huodongjieshushijian")%></td>
+    <td><%=RS_result.getString("huodongdizhi")%></td>
+    <td><%=RS_result.getString("tuanduizhanghao")%></td>
+    <td><%=RS_result.getString("tuanduimingcheng")%></td>
+    <td><%=RS_result.getString("lianxidianhua")%></td>
+    <td><%=RS_result.getString("baomingren")%></td>
+    <td><%=RS_result.getString("issh")%></td>
+    <td><%=RS_result.getString("shhf")%></td>
+    
+	
+	<td><%=RS_result.getString("addtime")%></td>
+   
+  </tr>
+  	<%
+  }
+   %>
+   
+</table>
+<br>
+  </body>
+</html>
+
